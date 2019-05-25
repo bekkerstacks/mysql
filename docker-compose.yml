@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mariadb:10.1
+    networks:
+      - private
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=testdb
+      - MYSQL_USER=demo
+      - MYSQL_PASSWORD=demo
+    volumes:
+      - db_data:/var/lib/mysql
+      - db_logs:/var/log/mysql
+    configs:
+      - source: db_config
+        target: /etc/mysql/conf.d/my.cnf
+
+volumes:
+  db_data: {}
+  db_logs: {}
+
+configs:
+  db_config:
+    file: $PWD/mysql/config/my.cnf
+
+networks:
+  private:
+    external: true
