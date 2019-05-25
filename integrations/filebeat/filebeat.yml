@@ -1,0 +1,14 @@
+filebeat.modules:
+- module: mysql
+  slowlog:
+    enabled: true
+    var.paths: ["/var/log/mysql/slow.log"]
+  error:
+    enabled: true
+    var.paths: ["/var/log/mysql/error.log"]
+ 
+ output.elasticsearch:
+  hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+  index: "filebeat-%{[beat.version]}-%{+yyyy.MM.dd}"
+  username: ${ELASTICSEARCH_USERNAME}
+  password: ${ELASTICSEARCH_PASSWORD}
